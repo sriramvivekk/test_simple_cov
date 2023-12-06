@@ -16,8 +16,8 @@ jobs:
         run: |
           bundle exec rspec
       - name: Upload coverage results
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v1
         if: always()
         with:
-          name: coverage-report
+          name: coverage.html
           path: coverage
