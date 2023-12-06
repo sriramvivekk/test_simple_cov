@@ -6,4 +6,4 @@
   # Minimum configuration
   - uses: joshmfrankel/simplecov-check-action@main
     with:
-      github_token: ${{ secrets.GITHUB_TOKEN }}
+      filename: coverage.index.html
