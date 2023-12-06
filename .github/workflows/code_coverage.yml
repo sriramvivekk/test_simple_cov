@@ -1,9 +1,25 @@
-  # However you run your tests to generate code coverage
-  - name: Run my tests
-    run: |
-      bundle exec rspec specs/
-
-  # Minimum configuration
-  - uses: joshmfrankel/simplecov-check-action@main
-    with:
-      filename: coverage.index.html
+name: RSpec with SimpleCov for a Gem
+​
+on: [push]
+​
+jobs:
+  build:
+    runs-on: ubuntu-latest
+​
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Ruby 2.6
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 3.1.3
+      - name: Build and test with Rake
+        run: |
+          gem install bundler -v '1.17.3'
+          bundle install --jobs 4 --retry 3
+          COVERAGE=true bundle exec rspec
+      - name: Upload coverage results
+        uses: actions/upload-artifact@master
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage
