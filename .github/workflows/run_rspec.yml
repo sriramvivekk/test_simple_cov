@@ -4,7 +4,7 @@ jobs:
   run-rspec-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -15,9 +15,19 @@ jobs:
       - name: Run tests
         run: |
           bundle exec rspec
-      - name: Upload coverage results
-        uses: actions/upload-artifact@v3
-        if: always()
+      steps:
+      - uses: actions/checkout@v3
+
+      - run: mkdir -p path/to/artifact
+
+      - run: echo hello > path/to/artifact/world.txt
+
+      - uses: actions/upload-artifact@v3
         with:
-          name: coverage-report
-          path: coverage.html
+          name: my-artifact
+          path: path/to/artifact/world.txt
+          
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: path/to/artifact/world.txt
